@@ -5,12 +5,14 @@ export class BalanceMap {
     const parsedStatement = statement.map(({
       id,
       amount,
+      sender_id,
       description,
       type,
       created_at,
       updated_at
-    }) => (
-      {
+    }) => {
+      if (type !== 'transfer'){
+      return ({
         id,
         amount: Number(amount),
         description,
@@ -18,7 +20,18 @@ export class BalanceMap {
         created_at,
         updated_at
       }
-    ));
+    )}
+    return ({
+      id,
+      sender_id,
+      amount: Number(amount),
+      description,
+      type,
+      created_at,
+      updated_at
+    }
+    )
+  });
 
     return {
       statement: parsedStatement,
